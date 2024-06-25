@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>CRUD - Generator</title>
+    <script src="assets/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="crud.js"></script>
+    
+</head>
+
+<body>
+    <div style="width: 100%;display: flex;flex-direction: row;justify-content: center;padding: 14px;">
+        <div style="width: 25%;padding: 10px;">
+            <p class="text-primary">MYSQL Database</p>
+            <div class="input-group" id="host">
+                <div class="input-group-prepend"><span class="input-group-text" style="width: 100px;">Host</span></div><input class="form-control" type="text" id="host_txt" value="localhost" name="host_txt">
+                <div class="input-group-append"></div>
+            </div>
+            <div class="input-group" id="password">
+                <div class="input-group-prepend"><span class="input-group-text" style="width: 100px;">User</span></div><input class="form-control" type="text" id="username_txt" value="root" name="username_txt">
+                <div class="input-group-append"></div>
+            </div>
+            <div class="input-group" id="database">
+                <div class="input-group-prepend"><span class="input-group-text" style="width: 100px;">Pass</span></div><input class="form-control" type="text" id="password_txt" name="password_txt">
+                <div class="input-group-append"></div>
+            </div>
+            <div class="input-group" id="database">
+                <div class="input-group-prepend"><span class="input-group-text" style="width: 100px;">Database</span></div><input class="form-control" type="text" id="database_txt" value="kasir" name="database_txt">
+                <div class="input-group-append"></div>
+            </div><br>
+            <p class="text-primary">Tables dan Fields</p>
+            <div id="table" class="input-group mb-3" style="margin-top: 10px;">
+                <div class="input-group-prepend"><label class="input-group-text" for="inputGroupSelect01" style="width: 100px;">Tables</label></div>
+                <select id="table_txt" class="custom-select" id="table_txt" name="table_txt">
+                    
+                </select>
+            </div>
+            <div id="table" class="input-group mb-3" style="margin-top: -16px;">
+                <div class="input-group-prepend"><label class="input-group-text" for="inputGroupSelect01" style="width: 100px;">Fields</label></div>
+                <select id="fields_txt" class="custom-select" id="fields_txt" name="fields_txt">
+                    
+                </select>
+                <div class="input-group-append">
+                                  <button class="btn btn-primary" type="button" id="field_remove" name="field_remove">X</button>
+                                </div>
+            </div>
+
+                <button id="koneksi" name="koneksi" class="btn btn-primary" type="button" style="width: 100%;">1. Connect lalu pilih table</button>
+            <button
+                class="btn btn-primary" id="open" name="open" type="button" style="width: 100%;margin: 0;margin-top: 10px;">2. Load Files</button>
+            <button
+                class="btn btn-primary" id="generate" name="generate" type="button" style="width: 100%;margin: 0;margin-top: 10px;">3. Generate</button>
+        </div>
+        <div style="width: 75%;padding: 10px;">
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Config</a></li>
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Index</a></li>
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Javascript<br></a></li>
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-4">Load Data<br></a></li>
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-5">Aksi<br></a></li>
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-6">Styles<br></a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-7">Controller<br></a></li> -->
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-8">Snippets<br></a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" role="tabpanel" id="tab-1"  style="padding: 12px;">
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Save as :</span></div>
+                            <input type="text" class="form-control" id="config_name" name="config_name" value="config.php" />
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="config_save" name="config_save">Save !</button>
+                                <button class="btn btn-success" type="button" id="config_copy" name="config_copy">Copy</button></div>
+                        </div><br>
+                        <textarea id="t4_config" name="t4_config" style="width: 100%;height: 80vh;background: #333333;color: #85ffa5;"></textarea>  
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-2" style="padding: 12px;">
+                        <!-- <button id="index_copy" name="index_copy" class="btn btn-primary" type="button" style="margin-bottom: 10px;">Copy</button> -->
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Save as :</span></div>
+                            <input type="text" class="form-control" id="index_name" name="index_name" value="index_NAMA_TABLE.php" />
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="index_save" name="index_save">Save !</button>
+                                <button class="btn btn-success" type="button" id="index_copy" name="index_copy">Copy</button></div>
+                        </div><br>
+                        <textarea id="t4_index" name="t4_index" style="width: 100%;height: 80vh;background: #333333;color: #85ffa5;"></textarea>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-3" style="padding: 12px;">
+                        <!-- <button id="javascript_copy" name="javascript_copy" class="btn btn-primary" type="button" style="margin-bottom: 10px;">Copy</button> -->
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Save as :</span></div>
+                            <input type="text" class="form-control" id="javascript_name" name="javascript_name" value="NAMA_TABLE.js" />
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="javascript_save" name="javascript_save">Save !</button>
+                                <button class="btn btn-success" type="button" id="javascript_copy" name="javascript_copy">Copy</button></div>
+                        </div><br>
+                        <textarea id="t4_javascript" name="t4_javascript" style="width: 100%;height: 80vh;background: #333333;color: #85ffa5;"></textarea>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-4" style="padding: 12px;">
+                        <!-- <button id="load_copy" name="load_copy" class="btn btn-primary" type="button" style="margin-bottom: 10px;">Copy</button> -->
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Save as :</span></div>
+                            <input type="text" class="form-control" id="loaddata_name" name="loaddata_name" value="load_data_NAMA_TABLE.php" />
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="loaddata_save" name="loaddata_save">Save !</button>
+                                <button class="btn btn-success" type="button" id="load_copy" name="load_copy">Copy</button></div>
+                        </div><br>
+                        <textarea id="t4_load_data" name="t4_load_data" style="width: 100%;height: 80vh;background: #333333;color: #85ffa5;"></textarea>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-5" style="padding: 12px;">
+                        <!-- <button id="aksi_copy" name="aksi_copy" class="btn btn-primary" type="button" style="margin-bottom: 10px;">Copy</button> -->
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Save as :</span></div>
+                            <input type="text" class="form-control" id="aksi_name" name="aksi_name" value="aksi.php" />
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="aksi_save" name="aksi_save">Save !</button>
+                                <button class="btn btn-success" type="button" id="aksi_copy" name="aksi_copy">Copy</button></div>
+                        </div><br>
+                        <textarea id="t4_aksi" name="t4_aksi" style="width: 100%;height: 80vh;background: #333333;color: #85ffa5;"></textarea>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-6" style="padding: 12px;">
+                        <!-- <button id="aksi_copy" name="aksi_copy" class="btn btn-primary" type="button" style="margin-bottom: 10px;">Copy</button> -->
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Save as :</span></div>
+                            <input type="text" class="form-control" id="styles_name" name="styles_name" value="styles.css" />
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="styles_save" name="styles_save">Save !</button>
+                                <button class="btn btn-success" type="button" id="styles_copy" name="styles_copy">Copy</button></div>
+                        </div><br>
+                        <textarea id="t4_styles" name="t4_styles" style="width: 100%;height: 80vh;background: #333333;color: #85ffa5;"></textarea>
+                    </div>
+                     <!-- <div class="tab-pane" role="tabpanel" id="tab-7" style="padding: 12px;">
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Save as :</span></div>
+                            <input type="text" class="form-control" id="controller_name" name="controller_name" value="controller.php" />
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="controller_save" name="controller_save">Save !</button>
+                                <button class="btn btn-success" type="button" id="controller_copy" name="controller_copy">Copy</button></div>
+                        </div><br>
+                        <textarea id="t4_controller" name="t4_controller" style="width: 100%;height: 80vh;background: #333333;color: #85ffa5;"></textarea>
+                    </div> -->
+                    <div class="tab-pane" role="tabpanel" id="tab-8" style="padding: 12px;">
+                        <!-- <button id="aksi_copy" name="aksi_copy" class="btn btn-primary" type="button" style="margin-bottom: 10px;">Copy</button> -->
+                        <textarea id="t4_snippets" name="t4_snippets" style="width: 100%;height: 80vh;background: #333333;color: #85ffa5;"></textarea>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

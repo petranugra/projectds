@@ -1,0 +1,90 @@
+pip install mysql-connector-python
+
+import mysql.connector
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+# Konfigurasi koneksi ke database
+db_config = {
+    'user': 'root',  # Ganti dengan username Anda
+    'password': '',  # Ganti dengan password Anda
+    'host': 'localhost',
+    'database': 'projectds'  # Ganti dengan nama database Anda
+}
+
+# Menghubungkan ke database
+conn = mysql.connector.connect(**db_config)
+
+# Mengambil data dari database
+query = """
+SELECT Tanggal,id_obat, jumlah as JumlahPembelian
+FROM data_pembelian
+WHERE id_obat = 1
+"""
+data = pd.read_sql(query, conn)
+
+# Menutup koneksi ke database
+conn.close()
+
+# Menampilkan beberapa baris pertama dari dataframe untuk memahami strukturnya
+print(data.head())
+
+# Mengonversi 'Tanggal' ke format datetime dan mengurutkan data berdasarkan tanggal
+data['Tanggal'] = pd.to_datetime(data['Tanggal'])
+data = data.sort_values('Tanggal')
+
+# Menetapkan 'Tanggal' sebagai indeks
+data.set_index('Tanggal', inplace=True)
+
+# Menghitung Exponential Moving Average (EMA) untuk periode 3 bulan
+data['EMA'] = data['JumlahPembelian'].ewm(span=3, adjust=False).mean()
+
+# Menghitung Mean Absolute Percentage Error (MAPE) untuk EMA
+def hitung_mape(aktual, ramalan):
+    return (abs(aktual - ramalan) / aktual).mean() * 100
+
+# Menghapus nilai NA untuk perhitungan MAPE
+ema_mape = hitung_mape(data['JumlahPembelian'].dropna(), data['EMA'].dropna())
+
+print(data)
+print("EMA MAPE:", ema_mape, "%")
+
+# Inisialisasi daftar untuk menyimpan nilai ramalan
+ramalan_ema = []
+
+# Mendapatkan data aktual 3 bulan terakhir
+data_3_bulan_terakhir = data['JumlahPembelian'].iloc[-3:].tolist()  # Konversi ke list
+
+# Meramalkan 3 bulan ke depan menggunakan EMA
+alpha = 2 / (3 + 1)  # Faktor pemulusan (smoothing)
+for _ in range(3):
+    if ramalan_ema:
+        ema_ramalan = (data_3_bulan_terakhir[-1] * alpha) + (ramalan_ema[-1] * (1 - alpha))
+    else:
+        ema_ramalan = sum(data_3_bulan_terakhir) / len(data_3_bulan_terakhir)  # Nilai EMA awal
+    ramalan_ema.append(ema_ramalan)
+    data_3_bulan_terakhir.pop(0)  # Hapus nilai tertua
+    data_3_bulan_terakhir.append(ema_ramalan)  # Tambahkan ramalan baru
+
+print("Prediksi 3 bulan ke depan EMA:", ramalan_ema)
+
+# Plotting actual data
+plt.figure(figsize=(14, 7))
+plt.plot(data.index, data['JumlahPembelian'], label='Aktual', marker='o')
+
+# Plotting EMA
+plt.plot(data.index, data['EMA'], label='EMA', linestyle='--')
+
+# Plotting the predictions for the next 3 months
+future_dates = pd.date_range(start=data.index[-1], periods=4, freq='M')[1:]
+plt.plot(future_dates, ramalan_ema, label='Prediksi EMA', linestyle='--', marker='o')
+
+# Adding labels and legend
+plt.xlabel('Tanggal')
+plt.ylabel('Jumlah Pembelian')
+plt.title('Prediksi Pembelian Obat "CENDO CENFRESH MINIDOSE 0,6 ML" dengan EMA')
+plt.legend()
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.show()

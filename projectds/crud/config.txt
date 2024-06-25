@@ -1,0 +1,13 @@
+<?php
+	$host = "ISI_HOST";
+	$user = "ISI_USER";
+	$password ="ISI_PASS";
+	$db = "ISI_DATA";
+	
+    $conn = new mysqli($host,$user,$password,$db);
+
+	if ($conn -> connect_errno) {
+	  echo "Failed to connect to MySQL: " . $conn -> connect_error;
+	  exit();
+	}
+?>

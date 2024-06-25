@@ -1,0 +1,59 @@
+<?php 
+//session_start();
+//require('../../sess.php');
+require ('../../../config/config.php');
+
+if(isset($_POST['typeact'])){ $act = $_POST['typeact']; }else{ $act = ''; }
+if ($act=='add') {
+
+POST_VARIABLE
+    
+    $NAMA_TABLE_add = $conn->prepare('INSERT INTO NAMA_TABLE VALUES (TEMPAT_VALUES)');
+    $NAMA_TABLE_add->bind_param ('VARIABLE_TIPE_ADD', ISI_VALUES);
+    $NAMA_TABLE_add->execute();
+
+     if($NAMA_TABLE_add == true){
+        header('location:index_NAMA_TABLE.php');
+     }
+}
+if ($act=="edit") {
+
+POST_VARIABLE
+
+// BUANG FIELD PERTAMA
+
+    $NAMA_TABLE_edit = $conn->prepare("UPDATE NAMA_TABLE SET VALUES_EDIT WHERE WHERE_EDIT");
+    $NAMA_TABLE_edit->bind_param ('TIPE_VARIABLE', VALUES_ISI_EDIT);
+    $NAMA_TABLE_edit->execute();
+   
+    // Kembali Ke halaman Semula
+    if($NAMA_TABLE_edit == true){
+        header("location:index_NAMA_TABLE.php");
+    }
+}
+
+if ($act=="del") {
+POST_DELETE
+    $query="DELETE FROM NAMA_TABLE WHERE WHERE_DELETE";
+    $result = mysqli_query($conn,$query);
+    if($result == true){
+        header("location:index_NAMA_TABLE.php");
+    }
+}
+
+if ($act=="lihat") {
+
+    $user_lihat = $conn->prepare("SELECT * from NAMA_TABLE ");
+    $user_lihat->execute();
+    $result = $user_lihat->get_result();
+
+    $data = array();
+
+    while ($row = $result->fetch_assoc()) {
+       $data[] = array(
+LIHAT_ISI         
+       );
+    }
+    echo json_encode($data);
+}
+?>
