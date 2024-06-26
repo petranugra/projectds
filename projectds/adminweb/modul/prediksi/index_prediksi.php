@@ -75,10 +75,17 @@ function calculateEMA($prices, $period) {
 
 function calculateMAPE($actual, $predicted) {
     $sumPercentageError = 0;
-    $n = count($actual);
+    $n = 0;
 
-    for ($i = 0; $i < $n; $i++) {
-        $sumPercentageError += abs(($actual[$i] - $predicted[$i]) / $actual[$i]);
+    for ($i = 0; $i < count($actual); $i++) {
+        if ($actual[$i] != 0) {
+            $sumPercentageError += abs(($actual[$i] - $predicted[$i]) / $actual[$i]);
+            $n++;
+        }
+    }
+
+    if ($n == 0) {
+        return 0; // Menghindari pembagian dengan nol
     }
 
     $mape = ($sumPercentageError / $n) * 100;
@@ -107,7 +114,7 @@ echo "<table>";
 echo "<tr><th>Periode</th><th>Nama Obat</th><th>Jumlah Pembelian</th><th>EMA</th><th>Percentage Error</th></tr>";
 
 for ($i = 0; $i < count($actualValues); $i++) {
-    $percentageError = abs(($actualValues[$i] - $predictedValues[$i]) / $actualValues[$i]) * 100;
+    $percentageError = ($actualValues[$i] != 0) ? abs(($actualValues[$i] - $predictedValues[$i]) / $actualValues[$i]) * 100 : 0;
     echo "<tr>";
     echo "<td>" . $dates[$i + $period] . "</td>";
     echo "<td>" . $nama[$i] . "</td>";
