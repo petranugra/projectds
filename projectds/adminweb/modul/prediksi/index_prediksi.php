@@ -36,7 +36,7 @@ if ($conn->connect_error) {
 }
 
 // Query untuk mengambil data jumlah pembelian
-$sql = "SELECT periode, jumlah FROM pembelian ORDER BY periode ASC";
+$sql = "SELECT *  FROM pembelian p JOIN  obat o ON o.id_obat = o.id_obat ORDER BY periode ASC";
 $result = $conn->query($sql);
 
 $dates = [];
@@ -44,6 +44,7 @@ $purchases = [];
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
+        $nama[] = $row['nama'];
         $dates[] = $row['periode'];
         $purchases[] = $row['jumlah'];
     }
@@ -103,12 +104,13 @@ for ($i = 0; $i < 3; $i++) {
 
 echo "<h2>Data Pembelian dan EMA</h2>";
 echo "<table>";
-echo "<tr><th>Periode</th><th>Jumlah Pembelian</th><th>EMA</th><th>Percentage Error</th></tr>";
+echo "<tr><th>Periode</th><th>Nama Obat</th><th>Jumlah Pembelian</th><th>EMA</th><th>Percentage Error</th></tr>";
 
 for ($i = 0; $i < count($actualValues); $i++) {
     $percentageError = abs(($actualValues[$i] - $predictedValues[$i]) / $actualValues[$i]) * 100;
     echo "<tr>";
     echo "<td>" . $dates[$i + $period] . "</td>";
+    echo "<td>" . $nama[$i] . "</td>";
     echo "<td>" . $actualValues[$i] . "</td>";
     echo "<td>" . $predictedValues[$i] . "</td>";
     echo "<td>" . $percentageError . "%</td>";
@@ -119,6 +121,7 @@ for ($i = 0; $i < count($actualValues); $i++) {
 for ($i = count($actualValues); $i < count($emaValues) - 1; $i++) {
     echo "<tr>";
     echo "<td>" . $dates[$i + $period] . "</td>";
+    echo "<td>" . $nama[$i] . "</td>";
     echo "<td> - </td>"; // Tidak ada nilai aktual untuk prediksi
     echo "<td>" . $emaValues[$i + 1] . "</td>";
     echo "<td> - </td>"; // Tidak ada nilai percentage error untuk prediksi
@@ -176,3 +179,6 @@ echo "<h3>MAPE: " . $mape . "%</h3>";
 
 </body>
 </html>
+
+
+
