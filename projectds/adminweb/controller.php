@@ -28,4 +28,8 @@ if ($_GET["mod"]=="prediksi") { //LEVEL
 	include("modul/prediksi/index_prediksi.php");
 }
 
+if ($_GET["mod"]=="prediksi2") { //LEVEL
+	include("modul/prediksi2/index_prediksi2.php");
+}
+
 ?>

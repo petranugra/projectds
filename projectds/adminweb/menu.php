@@ -17,7 +17,10 @@
 	<a href="index.php?mod=pemesanan"><i class="fas 	fa fa-medkit"></i> Jumlah Pemesanan Obat</a>
 </li>
 <li class=""> 
-	<a href="index.php?mod=prediksi"><i class="fas 	fa fa-medkit"></i> Prediksi Obat</a>
+	<a href="index.php?mod=prediksi"><i class="fas 	fa fa-medkit"></i> Prediksi Obat Jumlah Pembelian</a>
+</li>
+<li class=""> 
+	<a href="index.php?mod=prediksi2"><i class="fas 	fa fa-medkit"></i> Prediksi Obat Jumlah Pemesanan</a>
 </li>
 <li>
     <a href="logout.php">Log Out</a>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>EMA Calculation and Graph</title>
+    <title>Prediksi Obat</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         table {
@@ -36,7 +36,7 @@ if ($conn->connect_error) {
 }
 
 // Query untuk mengambil data jumlah pembelian
-$sql = "SELECT *  FROM pembelian p JOIN  obat o ON o.id_obat = o.id_obat ORDER BY periode ASC";
+$sql = "SELECT *  FROM pembelian p JOIN  obat o ON o.id_obat = o.id_obat WHERE p.jumlah != 0 ORDER BY periode ASC"  ;
 $result = $conn->query($sql);
 
 $dates = [];
@@ -85,7 +85,7 @@ function calculateMAPE($actual, $predicted) {
     return $mape;
 }
 
-$period = 3; // Sesuaikan dengan kebutuhan Anda
+$period = 3; // Lama periode
 $emaValues = calculateEMA($purchases, $period);
 
 // Untuk menghitung MAPE, kita hanya bisa menggunakan nilai EMA yang memiliki nilai aktual yang sesuai (dimulai dari periode ke-n)
@@ -94,15 +94,15 @@ $predictedValues = array_slice($emaValues, 1); // Menghapus nilai EMA pertama ya
 
 $mape = calculateMAPE($actualValues, $predictedValues);
 
-// Prediksi 3 bulan berikutnya menggunakan EMA
-for ($i = 0; $i < 3; $i++) {
+// Prediksi 1 bulan berikutnya menggunakan EMA
+for ($i = 0; $i < 1; $i++) {
     $nextEma = ($purchases[count($purchases) - 1] - end($emaValues)) * (2 / ($period + 1)) + end($emaValues);
     $emaValues[] = $nextEma;
     $purchases[] = $nextEma; // Tambahkan nilai prediksi ke array purchases untuk melanjutkan perhitungan EMA
     $dates[] = date('Y-m', strtotime(end($dates) . ' +1 month')); // Tambahkan tanggal prediksi
 }
 
-echo "<h2>Data Pembelian dan EMA</h2>";
+echo "<h2>Data Pembelian dan EMA (Exponential Moving Average)</h2>";
 echo "<table>";
 echo "<tr><th>Periode</th><th>Nama Obat</th><th>Jumlah Pembelian</th><th>EMA</th><th>Percentage Error</th></tr>";
 
