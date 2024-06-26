@@ -102,7 +102,7 @@ for ($i = 0; $i < 1; $i++) {
     $dates[] = date('Y-m', strtotime(end($dates) . ' +1 month')); // Tambahkan tanggal prediksi
 }
 
-echo "<h2>Data Penjualans dan EMA (Exponential Moving Average)</h2>";
+echo "<h2>Data Penjualan dan EMA (Exponential Moving Average)</h2>";
 echo "<table>";
 echo "<tr><th>Periode</th><th>Nama Obat</th><th>Jumlah Pemesanan</th><th>EMA</th><th>Percentage Error</th></tr>";
 
