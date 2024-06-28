@@ -35,8 +35,8 @@ if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
 }
 
-// Query untuk mengambil data jumlah pemesanan
-$sql = "SELECT *  FROM pemesanan p JOIN  obat o ON o.id_obat = o.id_obat ORDER BY periode ASC"  ;
+// Query untuk mengambil data jumlah pembelian
+$sql = "SELECT *  FROM pembelian p JOIN  obat o ON o.id_obat = o.id_obat ORDER BY periode ASC"  ;
 $result = $conn->query($sql);
 
 $dates = [];
@@ -72,7 +72,6 @@ function calculateEMA($prices, $period) {
 
     return $ema;
 }
-
 
 function calculateMAPE($actual, $predicted) {
     $sumPercentageError = 0;
@@ -112,12 +111,12 @@ for ($i = 0; $i < 1; $i++) {
     $dates[] = date('Y-m', strtotime(end($dates) . ' +1 month')); // Tambahkan tanggal prediksi
 }
 
-echo "<h2>Data Penjualan dan EMA (Exponential Moving Average)</h2>";
+echo "<h2>Data Pembelian dan EMA (Exponential Moving Average)</h2>";
 echo "<table>";
-echo "<tr><th>Periode</th><th>Nama Obat</th><th>Jumlah Pemesanan</th><th>EMA</th><th>Percentage Error</th></tr>";
+echo "<tr><th>Periode</th><th>Nama Obat</th><th>Jumlah Pembelian</th><th>EMA</th><th>Percentage Error</th></tr>";
 
 for ($i = 0; $i < count($actualValues); $i++) {
-	$percentageError = ($actualValues[$i] != 0) ? abs(($actualValues[$i] - $predictedValues[$i]) / $actualValues[$i]) * 100 : 0;
+    $percentageError = ($actualValues[$i] != 0) ? abs(($actualValues[$i] - $predictedValues[$i]) / $actualValues[$i]) * 100 : 0;
     echo "<tr>";
     echo "<td>" . $dates[$i + $period] . "</td>";
     echo "<td>" . $nama[$i] . "</td>";
@@ -150,7 +149,7 @@ echo "<h3>MAPE: " . $mape . "%</h3>";
         labels: labels,
         datasets: [
             {
-                label: 'Jumlah Pemesanan',
+                label: 'Jumlah Pembelian',
                 data: <?php echo json_encode($actualValues); ?>,
                 borderColor: 'rgb(75, 192, 192)',
                 tension: 0.1
@@ -175,7 +174,7 @@ echo "<h3>MAPE: " . $mape . "%</h3>";
                 },
                 title: {
                     display: true,
-                    text: 'Grafik Jumlah Pemesanan dan EMA'
+                    text: 'Grafik Jumlah Pembelian dan EMA'
                 }
             }
         },
