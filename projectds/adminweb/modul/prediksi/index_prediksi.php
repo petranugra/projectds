@@ -45,6 +45,8 @@ $conn->close();
 </head>
 <body>
 
+<br>	
+<th>Pilih Obat </th>
 <form action="index.php" method="GET">
     <input type="hidden" name="mod" value="prediksi">
     <select name="obat" id="obat">
