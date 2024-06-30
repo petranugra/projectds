@@ -26,13 +26,15 @@ jQuery().ready(function () {
         "columns": [
 { 'data': 'id_obat' },
 { 'data': 'nama' },
+{ 'data': 'stok' },
 { 'data': 'deskripsi' }
 
         ],
         "columnDefs": [
 { 'targets': 0, 'className': 'text-center' },
 { 'targets': 1, 'className': 'text-center' },
-{ 'targets': 2, 'className': 'text-center' }
+{ 'targets': 1, 'className': 'text-center' },
+{ 'targets': 3, 'className': 'text-center' }
 
         ],
         buttons: []
@@ -171,8 +173,8 @@ var id_obat = rowData['id_obat'];
     jQuery("#tambah_data_obat").click(function () {
 
         $('#id_obat').val('');
-$('#nama').val('');
-$('#deskripsi').val('');
+        $('#nama').val('');
+        $('#deskripsi').val('');
 
 
         $("#typeact").val("add");
@@ -196,12 +198,13 @@ $('#deskripsi').val('');
             dataType: 'json',
             success: function (res) {
                 console.log(res);
-                var eTable = "<table id='tbl_obat' class='display dataTable' style='width:100%'><thead><th>id_obat</th><th>nama</th><th>deskripsi</th></thead>";
+                var eTable = "<table id='tbl_obat' class='display dataTable' style='width:100%'><thead><th>id_obat</th><th>nama</th><th>stok</th><th>deskripsi</th></thead>";
                 for (var i = 0; i < res.length; i++) {
                     eTable += "<tr>";
                     eTable += '<td>' + res[i]['id_obat'] + '</td>';
-eTable += '<td>' + res[i]['nama'] + '</td>';
-eTable += '<td>' + res[i]['deskripsi'] + '</td>';
+                    eTable += '<td>' + res[i]['nama'] + '</td>';
+                    eTable += '<td>' + res[i]['stok'] + '</td>';
+                    eTable += '<td>' + res[i]['deskripsi'] + '</td>';
                     eTable += "</tr>";
                 }
                 eTable += "</tbody></table>";

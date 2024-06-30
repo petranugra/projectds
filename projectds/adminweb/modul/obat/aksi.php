@@ -49,7 +49,31 @@ $id_obat= $_POST['id_obat'];
 
 if ($act=="lihat") {
 
-    $user_lihat = $conn->prepare("SELECT * from obat ");
+    $user_lihat = $conn->prepare("SELECT 
+    o.id_obat,
+    o.nama,  
+    COALESCE(pes.jumlah_pemesanan, 0) - COALESCE(pbl.jumlah_pembelian, 0) AS stok,
+    o.deskripsi
+FROM 
+    obat o  
+LEFT JOIN (
+    SELECT 
+        pe.id_obat, 
+        SUM(pe.jumlah) AS jumlah_pemesanan
+    FROM 
+        pemesanan pe
+    GROUP BY 
+        pe.id_obat
+) pes ON o.id_obat = pes.id_obat
+LEFT JOIN (
+    SELECT 
+        pb.id_obat, 
+        SUM(pb.jumlah) AS jumlah_pembelian
+    FROM 
+        pembelian pb
+    GROUP BY 
+        pb.id_obat
+) pbl ON o.id_obat = pbl.id_obat ");
     $user_lihat->execute();
     $result = $user_lihat->get_result();
 
@@ -59,6 +83,7 @@ if ($act=="lihat") {
        $data[] = array(
 'id_obat'=>$row['id_obat'],
 'nama'=>$row['nama'],
+'stok'=>$row['stok'],
 'deskripsi'=>$row['deskripsi']         
        );
     }

@@ -31,16 +31,43 @@ $totalRecordwithFilter = $records['allcount'];
 
 
 ## Fetch records
-$empRecords = $conn->query("select * from obat WHERE 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row1.",".$rowperpage);
+#$empRecords = $conn->query("select * from obat WHERE 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row1.",".$rowperpage);
+$empRecords = $conn->query("SELECT 
+    o.id_obat,
+    o.nama,  
+    COALESCE(pes.jumlah_pemesanan, 0) - COALESCE(pbl.jumlah_pembelian, 0) AS stok,
+    o.deskripsi
+FROM 
+    obat o  
+LEFT JOIN (
+    SELECT 
+        pe.id_obat, 
+        SUM(pe.jumlah) AS jumlah_pemesanan
+    FROM 
+        pemesanan pe
+    GROUP BY 
+        pe.id_obat
+) pes ON o.id_obat = pes.id_obat
+LEFT JOIN (
+    SELECT 
+        pb.id_obat, 
+        SUM(pb.jumlah) AS jumlah_pembelian
+    FROM 
+        pembelian pb
+    GROUP BY 
+        pb.id_obat
+) pbl ON o.id_obat = pbl.id_obat WHERE 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row1.",".$rowperpage);
 
 $data = array();
 
+
+
 while ($row = $empRecords->fetch_assoc()) {
-   $data[] = array(
+$data[] = array(
 'id_obat'=>$row['id_obat'],
 'nama'=>$row['nama'],
+'stok'=>$row['stok'],
 'deskripsi'=>$row['deskripsi']
-
 );
 }
 

@@ -101,8 +101,8 @@
     <thead>
       <tr> <th>id_obat</th>
 <th>nama</th>
+<th>stok</th>
 <th>deskripsi</th>
-
         <!--<th>No. Pegawai</th>-->
       </tr>
     </thead>
