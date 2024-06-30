@@ -46,14 +46,21 @@ $conn->close();
 <body>
 
 <br>	
-<th>Pilih Obat </th>
+
 <form action="index.php" method="GET">
     <input type="hidden" name="mod" value="prediksi">
+    <th>Pilih Obat </th>
+    <br>
     <select name="obat" id="obat">
         <?php foreach($obat_list as $obat) { ?>
             <option value="<?php echo $obat ?>"><?php echo $obat ?></option>
         <?php } ?>
     </select>
+    <br>
+    <br>
+    <th>Masukkan Periode Smoothing (Bulan) </th>
+    <br>
+    <input type="text" name="periode" id="periode"> </input>
     <input type="submit" value="Submit">
 </form>
 
@@ -120,7 +127,7 @@ if (isset($_GET['obat']) && isset($_GET['mod']) && $_GET['mod'] == 'prediksi') {
         return $mape;
     }
 
-    $period = 3; // Lama periode
+    $period = $_GET['periode']; // Lama periode
     $emaValues = calculateEMA($purchases, $period);
 
     // Untuk menghitung MAPE, kita hanya bisa menggunakan nilai EMA yang memiliki nilai aktual yang sesuai (dimulai dari periode ke-n)
@@ -137,7 +144,7 @@ if (isset($_GET['obat']) && isset($_GET['mod']) && $_GET['mod'] == 'prediksi') {
         $dates[] = date('Y-m', strtotime(end($dates). '1 month')); // Tambahkan tanggal prediksi
     }
 
-    echo "<h2>Data Pembelian dan EMA (Exponential Moving Average) untuk Obat $selected_obat</h2>";
+    echo "<h2>Data Pembelian dan EMA (Exponential Moving Average) untuk Obat $selected_obat dengan Periode Smoothing $period Bulan</h2>";
     echo "<table>";
     echo "<tr><th>Periode</th><th>Jumlah Pembelian</th><th>EMA</th><th>Percentage Error</th></tr>";
 
