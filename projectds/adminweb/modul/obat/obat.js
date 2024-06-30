@@ -178,7 +178,7 @@ var id_obat = rowData['id_obat'];
 
 
         $("#typeact").val("add");
-        $("#id_obat").prop('disabled', false);
+        $("#id_obat").prop('disabled', true);
         
         $('#modal-title').text("Tambah Data obat");
         $("#modal_obat").modal();

@@ -186,7 +186,7 @@ $('#periode').val('');
 
 
         $("#typeact").val("add");
-        $("#id_pemesanan").prop('disabled', false);
+        $("#id_pemesanan").prop('disabled', true);
         
         $('#modal-title').text("Tambah Data pemesanan");
         $("#modal_pemesanan").modal();
