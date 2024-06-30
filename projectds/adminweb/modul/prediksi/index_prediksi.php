@@ -61,7 +61,9 @@ $conn->close();
     <th>Masukkan Periode Smoothing (Bulan) </th>
     <br>
     <input type="text" name="periode" id="periode"> </input>
-    <input type="submit" value="Submit">
+    <br>
+    <br>
+    <input type="submit" value="Prediksi">
 </form>
 
 <?php
@@ -143,7 +145,7 @@ if (isset($_GET['obat']) && isset($_GET['mod']) && $_GET['mod'] == 'prediksi') {
         $purchases[] = $nextEma; // Tambahkan nilai prediksi ke array purchases untuk melanjutkan perhitungan EMA
         $dates[] = date('Y-m', strtotime(end($dates). '1 month')); // Tambahkan tanggal prediksi
     }
-
+    echo "<br>";
     echo "<h2>Data Pembelian dan EMA (Exponential Moving Average) untuk Obat $selected_obat dengan Periode Smoothing $period Bulan</h2>";
     echo "<table>";
     echo "<tr><th>Periode</th><th>Jumlah Pembelian</th><th>EMA</th><th>Percentage Error</th></tr>";
