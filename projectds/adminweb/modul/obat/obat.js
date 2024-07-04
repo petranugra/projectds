@@ -33,7 +33,7 @@ jQuery().ready(function () {
         "columnDefs": [
 { 'targets': 0, 'className': 'text-center' },
 { 'targets': 1, 'className': 'text-center' },
-{ 'targets': 1, 'className': 'text-center' },
+{ 'targets': 2, 'className': 'text-center' },
 { 'targets': 3, 'className': 'text-center' }
 
         ],
