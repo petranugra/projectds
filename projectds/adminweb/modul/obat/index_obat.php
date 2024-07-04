@@ -57,9 +57,10 @@
       </div>
       <div class="modal-body">
         <form name="form_obat">
-          <input type="hidden" class="form-control" id="typeact" /> <label>id_obat<br /></label><input type='text' class='form-control' id='id_obat' name='id_obat' /><div><span class='error'></span></div>
-<label>nama<br /></label><input type='text' class='form-control' id='nama' name='nama' /><div><span class='error'></span></div>
-<label>deskripsi<br /></label><input type='text' class='form-control' id='deskripsi' name='deskripsi' /><div><span class='error'></span></div>
+          <input type="hidden" class="form-control" id="typeact" /> 
+					<input type='hidden' class='form-control' id='id_obat' name='id_obat' /><div><span class='error'></span></div>
+					<label>nama<br /></label><input type='text' class='form-control' id='nama' name='nama' /><div><span class='error'></span></div>
+					<label>deskripsi<br /></label><input type='text' class='form-control' id='deskripsi' name='deskripsi' /><div><span class='error'></span></div>
 
           <!--<label>No. Pegawai <br /></label><input type="text" class="form-control" id="no_peg" name="no_peg" /><div><span class="error"></span></div>-->
       </div>

@@ -12,8 +12,8 @@ $jumlah = $conn -> real_escape_string($_POST['jumlah']);
 $periode = $conn -> real_escape_string($_POST['periode']);
 
     
-    $pemesanan_add = $conn->prepare('INSERT INTO pemesanan VALUES (?, ?, ?, ?)');
-    $pemesanan_add->bind_param ('ssss', $id_pemesanan, $id_obat, $jumlah, $periode);
+    $pemesanan_add = $conn->prepare('INSERT INTO pemesanan (id_obat,jumlah,periode) VALUES (?, ?, ?)');
+    $pemesanan_add->bind_param ('sss',  $id_obat, $jumlah, $periode);
     $pemesanan_add->execute();
 
      if($pemesanan_add == true){

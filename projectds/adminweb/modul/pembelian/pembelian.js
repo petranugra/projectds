@@ -185,7 +185,7 @@ $('#periode').val('');
 
 
         $("#typeact").val("add");
-        $("#id_pembelian").prop('disabled', true);
+        $("#id_pembelian").prop('disabled', false);
         
         $('#modal-title').text("Tambah Data pembelian");
         $("#modal_pembelian").modal();

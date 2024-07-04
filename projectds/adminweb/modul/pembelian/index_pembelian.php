@@ -59,7 +59,8 @@
       </div>
       <div class="modal-body">
         <form name="form_pembelian">
-          <input type="hidden" class="form-control" id="typeact" /> <label>id_pembelian<br /></label><input type='text' class='form-control' id='id_pembelian' name='id_pembelian' /><div><span class='error'></span></div>
+          <input type="hidden" class="form-control" id="typeact" /> 
+<input type='hidden' class='form-control' id='id_pembelian' name='id_pembelian' /><div><span class='error'></span></div>
 <label>id_obat<br /></label><input type='text' class='form-control' id='id_obat' name='id_obat' /><div><span class='error'></span></div>
 <label>jumlah<br /></label><input type='text' class='form-control' id='jumlah' name='jumlah' /><div><span class='error'></span></div>
 <label>periode<br /></label><input type='text' class='form-control' id='periode' name='periode' /><div><span class='error'></span></div>
