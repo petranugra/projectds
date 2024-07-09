@@ -6,19 +6,19 @@ require ('../../../config/config.php');
 if(isset($_POST['typeact'])){ $act = $_POST['typeact']; }else{ $act = ''; }
 if ($act=='add') {
 
-$id_obat = $conn -> real_escape_string($_POST['id_obat']);
 $nama = $conn -> real_escape_string($_POST['nama']);
 $deskripsi = $conn -> real_escape_string($_POST['deskripsi']);
 
     
-    $obat_add = $conn->prepare('INSERT INTO obat VALUES (?, ?, ?)');
-    $obat_add->bind_param ('sss', $id_obat, $nama, $deskripsi);
+    $obat_add = $conn->prepare('INSERT INTO obat (nama, deskripsi) VALUES (?, ?)');
+    $obat_add->bind_param ('ss', $nama, $deskripsi);
     $obat_add->execute();
 
      if($obat_add == true){
         header('location:index_obat.php');
      }
 }
+
 if ($act=="edit") {
 
 $id_obat = $conn -> real_escape_string($_POST['id_obat']);

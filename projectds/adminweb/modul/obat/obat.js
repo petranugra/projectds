@@ -33,7 +33,7 @@ jQuery().ready(function () {
         "columnDefs": [
 { 'targets': 0, 'className': 'text-center' },
 { 'targets': 1, 'className': 'text-center' },
-{ 'targets': 1, 'className': 'text-center' },
+{ 'targets': 2, 'className': 'text-center' },
 { 'targets': 3, 'className': 'text-center' }
 
         ],
@@ -178,7 +178,7 @@ var id_obat = rowData['id_obat'];
 
 
         $("#typeact").val("add");
-        $("#id_obat").prop('disabled', true);
+        $("#id_obat").prop('disabled', false);
         
         $('#modal-title').text("Tambah Data obat");
         $("#modal_obat").modal();
@@ -255,3 +255,4 @@ var id_obat = rowData['id_obat'];
         XLSX.writeFile(new_workbook, 'tmp_file.xls');
     })
 });
+

@@ -6,14 +6,13 @@ require ('../../../config/config.php');
 if(isset($_POST['typeact'])){ $act = $_POST['typeact']; }else{ $act = ''; }
 if ($act=='add') {
 
-$id_pembelian = $conn -> real_escape_string($_POST['id_pembelian']);
 $id_obat = $conn -> real_escape_string($_POST['id_obat']);
 $jumlah = $conn -> real_escape_string($_POST['jumlah']);
 $periode = $conn -> real_escape_string($_POST['periode']);
 
     
-    $pembelian_add = $conn->prepare('INSERT INTO pembelian VALUES (?, ?, ?, ?)');
-    $pembelian_add->bind_param ('ssss', $id_pembelian, $id_obat, $jumlah, $periode);
+    $pembelian_add = $conn->prepare('INSERT INTO pembelian (id_obat,jumlah,periode) VALUES (?, ?, ?)');
+    $pembelian_add->bind_param ('sss', $id_obat, $jumlah, $periode);
     $pembelian_add->execute();
 
      if($pembelian_add == true){
@@ -69,3 +68,4 @@ if ($act=="lihat") {
     echo json_encode($data);
 }
 ?>
+
