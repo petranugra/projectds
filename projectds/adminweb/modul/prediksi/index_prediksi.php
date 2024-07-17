@@ -134,8 +134,8 @@ if (isset($_GET['obat']) && isset($_GET['mod']) && $_GET['mod'] == 'prediksi') {
 
     // Untuk menghitung MAPE, kita hanya bisa menggunakan nilai EMA yang memiliki nilai aktual yang sesuai (dimulai dari periode ke-n)
     $actualValues = array_slice($purchases, $period);
-    $predictedValues = array_slice($emaValues, 1); // Menghapus nilai EMA pertama yang berdasarkan SMA
-
+    $predictedValues = array_slice($emaValues, 0); // Menghapus nilai EMA pertama yang berdasarkan SMA
+	
     $mape = calculateMAPE($actualValues, $predictedValues);
 
     // Prediksi 1 bulan berikutnya menggunakan EMA
@@ -145,6 +145,8 @@ if (isset($_GET['obat']) && isset($_GET['mod']) && $_GET['mod'] == 'prediksi') {
         $purchases[] = $nextEma; // Tambahkan nilai prediksi ke array purchases untuk melanjutkan perhitungan EMA
         $dates[] = date('Y-m', strtotime(end($dates). '1 month')); // Tambahkan tanggal prediksi
     }
+
+
     echo "<br>";
     echo "<h2>Data Pembelian dan EMA (Exponential Moving Average) untuk Obat $selected_obat dengan Periode Smoothing $period Bulan</h2>";
     echo "<table>";
@@ -159,13 +161,14 @@ if (isset($_GET['obat']) && isset($_GET['mod']) && $_GET['mod'] == 'prediksi') {
         echo "<td>". $percentageError. "%</td>";
         echo "</tr>";
     }
-
-    // Tampilkan prediksi 3 bulan berikutnya
+	
+	
+    // Tampilkan prediksi 1 bulan berikutnya
     for ($i = count($actualValues); $i < count($emaValues) - 1; $i++) {
         echo "<tr>";
         echo "<td>". $dates[$i + $period]. "</td>";
         echo "<td> - </td>"; // Tidak ada nilai aktual untuk prediksi
-        echo "<td>". $emaValues[$i + 1]. "</td>";
+        echo "<td>". $predictedValues[$i]. "</td>";
         echo "<td> - </td>"; // Tidak ada nilai percentage error untuk prediksi
         echo "</tr>";
     }
@@ -189,7 +192,7 @@ if (isset($_GET['obat']) && isset($_GET['mod']) && $_GET['mod'] == 'prediksi') {
                 },
                 {
                     label: 'EMA',
-                    data: <?php echo json_encode(array_slice($emaValues, 1));?>,
+                    data: <?php echo json_encode(array_slice($predictedValues, 0));?>,
                     borderColor: 'rgb(255, 99, 132)',
                     tension: 0.1
                 }
